@@ -5,18 +5,26 @@
  */
 package com.mycompany.pokemon.library.console.app.controller;
 
+import com.mycompany.pokemon.library.console.app.dto.Pokemon;
+import com.mycompany.pokemon.library.console.app.service.ServiceLayer;
 import com.mycompany.pokemon.library.console.app.view.UserInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Kenny
  */
-public class Controller {
-
+public class MainController {
+    
     UserInterface ui;
-
-    public Controller(UserInterface ui) {
+    ServiceLayer sl;
+    
+    public MainController(UserInterface ui,ServiceLayer sl) {
         this.ui = ui;
+        this.sl= sl;
     }
 
     public void run() {
@@ -31,7 +39,7 @@ public class Controller {
 
             switch (response) {
                 case "1":
-                    System.out.println("Add Pokemon");
+                    addPokemon();
                     break;
                 case "2":
                     System.out.println("Remove Pokemon");
@@ -43,17 +51,30 @@ public class Controller {
                     System.out.println("View all Pokemon");
                     break;
                 case "5":
-                    System.out.println("View Pokemon");
+                    viewAllPokemon();
                     break;
                 case "6" :
-                    System.out.println("Exit");
+                    ui.displayExit();
                     keepRunning = false;
                     break;
                 default:
-                    System.out.println("Unavailible");
+                    displayUnavailible();
             }
-
         }
-
     }
+    
+    private void addPokemon(){
+        sl.addPokemon(ui.promptUserPokemon());
+        ui.pressEnterToContinue();
+    }
+    
+    private void viewAllPokemon(){
+        ui.displayAllPokemon(sl.viewAllPokemon());
+        ui.pressEnterToContinue();
+    }
+    
+    private void displayUnavailible(){
+        ui.displayUnavailible();
+    }
+    
 }

@@ -7,11 +7,14 @@ package com.mycompany.pokemon.library.console.app.view;
 
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Kenny
  */
+
 
 public class UserIOImpl implements UserIO{
 
@@ -21,6 +24,7 @@ public class UserIOImpl implements UserIO{
     private Scanner scanner = new Scanner(System.in);
     
     //@Autowired
+ 
     public UserIOImpl(){
         
     }

@@ -3,59 +3,57 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.pokemon.library.console.app.dao;
+package com.mycompany.pokemon.library.console.app.service;
 
+import com.mycompany.pokemon.library.console.app.dao.Dao;
+import com.mycompany.pokemon.library.console.app.dao.DaoImpl;
 import com.mycompany.pokemon.library.console.app.dto.Pokemon;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Kenny
+ * @author kmlnd
  */
-@Component
-public class DaoImpl implements Dao{
 
-    Map<Integer ,Pokemon> pokedex = new HashMap<>();
+public class ServiceLayerImpl implements ServiceLayer{
+    
+    Dao dao;
+   
+    public ServiceLayerImpl(Dao dao){
+       this.dao = dao;
+    }
     
     @Override
     public Pokemon getPokemonById(int id) {
-       return pokedex.get(id);
+       return dao.getPokemonById(id);
     }
 
     @Override
     public Pokemon getPokemonByName(String name) {
-        List<Pokemon> pokemon = new ArrayList<>(pokedex.values());
-        for(Pokemon p : pokemon){
-            if(p.getName().equalsIgnoreCase(name)){
-                return p;
-            }
-        }
-        return null;
+        return dao.getPokemonByName(name);
     }
 
     @Override
     public void removePokemonById(int id) {
-        pokedex.remove(id);
+       dao.removePokemonById(id);
     }
 
     @Override
     public void addPokemon(Pokemon pokemon) {
-        pokedex.put(pokemon.getPokemonId(), pokemon);
+        dao.addPokemon(pokemon);
     }
 
     @Override
     public void updatePokemon(Pokemon pokemon) {
-        pokedex.put(pokemon.getPokemonId(), pokemon);
+        dao.updatePokemon(pokemon);
     }
 
     @Override
     public List<Pokemon> viewAllPokemon() {
-        return new ArrayList<>(pokedex.values());
+        return dao.viewAllPokemon();
     }
     
 }

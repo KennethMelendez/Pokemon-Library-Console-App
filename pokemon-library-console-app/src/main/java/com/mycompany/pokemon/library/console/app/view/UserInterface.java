@@ -5,14 +5,17 @@
  */
 package com.mycompany.pokemon.library.console.app.view;
 
+import com.mycompany.pokemon.library.console.app.dto.Pokemon;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Kenny
  */
 public class UserInterface {
+
 
     private UserIO io;
 
@@ -63,4 +66,54 @@ public class UserInterface {
         return io.readMsg(msg);
     }
     
+    public Pokemon promptUserPokemon(){
+        
+        Pokemon p = new Pokemon();
+        String id = userResponse("Insert Pokemons ID");
+        String name = userResponse("Insert Name.");
+        String description = userResponse("Insert Description");
+        String type1 = userResponse("Insert Pokemons Type.");
+        String type2 = userResponse("Insert Pokemons Second Type.");
+        
+        p.setPokemonId(Integer.parseInt(id));
+        p.setName(name);
+        p.setDescription(description);
+        p.setType1(type1);
+        p.setType2(type2);
+        
+        return p;
+    }
+    
+    public void displayAllPokemon(List<Pokemon> pokemon){
+        io.displayMsg("Pokemon List");
+        for( Pokemon currentPokemon : pokemon){
+            io.displayMsg("");
+            io.displayMsg("PokemonID : " + currentPokemon.getPokemonId());
+            io.displayMsg("PokemonName : " + currentPokemon.getName());
+            io.displayMsg("PokemonDescription : " + currentPokemon.getDescription());
+            io.displayMsg("PokemonType : " + currentPokemon.getType1());
+            io.displayMsg("PokemonType2 : " + currentPokemon.getType2());
+            io.displayMsg("");
+        }
+    }
+    
+    public void pokemonDeletedMessage(){
+        io.displayMsg("** Pokemon Removed.  ** ");
+    }
+    
+    public void pokemonAddedMessage(){
+        io.displayMsg("** Pokemon Added.  ** ");
+    }
+    
+    public void pressEnterToContinue(){
+        io.displayMsg("Press Enter To Continue.");
+    }
+    
+    public void displayUnavailible(){
+        io.displayMsg("Unavailible");
+    }
+    
+    public void displayExit(){
+        io.displayMsg("Exiting Application");
+    }
 }
