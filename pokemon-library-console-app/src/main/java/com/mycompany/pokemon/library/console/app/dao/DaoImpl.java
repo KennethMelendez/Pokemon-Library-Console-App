@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
  *
  * @author Kenny
  */
-@Component
 public class DaoImpl implements Dao{
 
     Map<Integer ,Pokemon> pokedex = new HashMap<>();

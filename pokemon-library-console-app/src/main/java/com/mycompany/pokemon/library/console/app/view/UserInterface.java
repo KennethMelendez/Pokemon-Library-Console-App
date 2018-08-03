@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UserInterface {
 
-
     private UserIO io;
 
     public UserInterface(UserIO io) {
@@ -62,31 +61,31 @@ public class UserInterface {
         return menuList;
     }
 
-    public String userResponse(String msg){
+    public String userResponse(String msg) {
         return io.readMsg(msg);
     }
-    
-    public Pokemon promptUserPokemon(){
-        
+
+    public Pokemon promptUserPokemon() {
+
         Pokemon p = new Pokemon();
         String id = userResponse("Insert Pokemons ID");
         String name = userResponse("Insert Name.");
         String description = userResponse("Insert Description");
         String type1 = userResponse("Insert Pokemons Type.");
         String type2 = userResponse("Insert Pokemons Second Type.");
-        
+
         p.setPokemonId(Integer.parseInt(id));
         p.setName(name);
         p.setDescription(description);
         p.setType1(type1);
         p.setType2(type2);
-        
+
         return p;
     }
-    
-    public void displayAllPokemon(List<Pokemon> pokemon){
+
+    public void displayAllPokemon(List<Pokemon> pokemon) {
         io.displayMsg("Pokemon List");
-        for( Pokemon currentPokemon : pokemon){
+        for (Pokemon currentPokemon : pokemon) {
             io.displayMsg("");
             io.displayMsg("PokemonID : " + currentPokemon.getPokemonId());
             io.displayMsg("PokemonName : " + currentPokemon.getName());
@@ -96,24 +95,45 @@ public class UserInterface {
             io.displayMsg("");
         }
     }
-    
-    public void pokemonDeletedMessage(){
+
+    public void displayPokemon(Pokemon currentPokemon) {
+        io.displayMsg("Current Pokemon");
+        io.displayMsg("PokemonID : " + currentPokemon.getPokemonId());
+        io.displayMsg("PokemonName : " + currentPokemon.getName());
+        io.displayMsg("PokemonDescription : " + currentPokemon.getDescription());
+        io.displayMsg("PokemonType : " + currentPokemon.getType1());
+        io.displayMsg("PokemonType2 : " + currentPokemon.getType2());
+        io.displayMsg("");
+    }
+
+    public void pokemonDeletedMessage() {
         io.displayMsg("** Pokemon Removed.  ** ");
     }
-    
-    public void pokemonAddedMessage(){
+
+    public void pokemonAddedMessage() {
         io.displayMsg("** Pokemon Added.  ** ");
     }
-    
-    public void pressEnterToContinue(){
-        io.displayMsg("Press Enter To Continue.");
+    public String inputPokemonName(){
+        return io.readMsg("Please insert Pokemon Name.");
     }
     
-    public void displayUnavailible(){
+    public int inputPokemonID(){
+        return io.readInt("Please Insert PokemonID.");
+    }
+    
+    public void pokemonRemovedMsg() {
+        io.displayMsg("Pokemon Removed.");
+    }
+
+    public void pressEnterToContinue() {
+        io.readMsg("Press Enter To Continue.");
+    }
+
+    public void displayUnavailible() {
         io.displayMsg("Unavailible");
     }
-    
-    public void displayExit(){
+
+    public void displayExit() {
         io.displayMsg("Exiting Application");
     }
 }

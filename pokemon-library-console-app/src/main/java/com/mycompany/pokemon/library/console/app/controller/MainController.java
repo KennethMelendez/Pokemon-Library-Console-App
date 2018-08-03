@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
  * @author Kenny
  */
 public class MainController {
-    
+
     UserInterface ui;
     ServiceLayer sl;
-    
-    public MainController(UserInterface ui,ServiceLayer sl) {
+
+    public MainController(UserInterface ui, ServiceLayer sl) {
         this.ui = ui;
-        this.sl= sl;
+        this.sl = sl;
     }
 
     public void run() {
@@ -42,39 +42,56 @@ public class MainController {
                     addPokemon();
                     break;
                 case "2":
-                    System.out.println("Remove Pokemon");
+                    removePokemon();
                     break;
                 case "3":
                     System.out.println("Update Pokemon");
                     break;
                 case "4":
-                    System.out.println("View all Pokemon");
-                    break;
-                case "5":
                     viewAllPokemon();
                     break;
-                case "6" :
+                case "5":
+                    displayPokemon();
+                    break;
+                case "6":
                     ui.displayExit();
                     keepRunning = false;
                     break;
                 default:
                     displayUnavailible();
+                    break;
             }
         }
     }
-    
-    private void addPokemon(){
+
+    private void removePokemon() {
+        sl.removePokemonById(ui.inputPokemonID());
+        ui.pokemonDeletedMessage();
+        pressEnter();
+    }
+
+    private void displayPokemon() {
+        int id = ui.inputPokemonID();
+        Pokemon currentPokemon = sl.getPokemonById(id);
+        ui.displayPokemon(currentPokemon);
+        pressEnter();
+    }
+
+    private void addPokemon() {
         sl.addPokemon(ui.promptUserPokemon());
-        ui.pressEnterToContinue();
+        pressEnter();
     }
-    
-    private void viewAllPokemon(){
+
+    private void viewAllPokemon() {
         ui.displayAllPokemon(sl.viewAllPokemon());
-        ui.pressEnterToContinue();
+        pressEnter();
     }
-    
-    private void displayUnavailible(){
+
+    private void displayUnavailible() {
         ui.displayUnavailible();
     }
-    
+
+    private void pressEnter() {
+        ui.pressEnterToContinue();
+    }
 }

@@ -47,10 +47,11 @@ public class UserIOImpl implements UserIO{
     }
 
     @Override
-    public int readInt(int msg) {
-        int result;
-        this.displayInt(msg);
-        return result = scanner.nextInt();
+    public int readInt(String msg) {
+        String result;
+        this.displayMsg(msg);
+        result = scanner.nextLine();
+        return Integer.parseInt(result);
     }
     
 }

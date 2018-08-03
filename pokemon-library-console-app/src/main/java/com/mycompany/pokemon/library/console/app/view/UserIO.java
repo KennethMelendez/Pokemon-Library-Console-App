@@ -17,6 +17,6 @@ public interface UserIO {
 
     public void displayInt(int msg);
     
-    public int readInt(int msg);
+    public int readInt(String msg);
     
 }
