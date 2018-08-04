@@ -32,7 +32,7 @@ public class DaoImpl implements Dao{
         for(Pokemon p : pokemon){
             if(p.getName().equalsIgnoreCase(name)){
                 return p;
-            }
+            }       
         }
         return null;
     }

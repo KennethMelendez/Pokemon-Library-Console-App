@@ -6,6 +6,8 @@
 package com.mycompany.pokemon.library.console.app.view;
 
 import com.mycompany.pokemon.library.console.app.dto.Pokemon;
+import com.mycompany.pokemon.library.console.app.exceptions.InvalidResponseException;
+import com.mycompany.pokemon.library.console.app.exceptions.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +85,133 @@ public class UserInterface {
         return p;
     }
 
+    public Pokemon editPokemon(Pokemon p) {
+        io.displayMsg("Edit this Pokemon?");
+        this.displayPokemon(p);
+
+        boolean invalidResponse = true;
+
+        while (invalidResponse) {
+            try {
+                p = editPokemonIntID(p, "Edit PokemonID?", "Insert Pokemons ID.");
+                invalidResponse = false;
+            } catch (InvalidResponseException ex) {
+                invalidResponse = true;
+            }
+        }
+        invalidResponse = true;
+        while (invalidResponse) {
+            try {
+                p = editPokemonStringName(p, "Edit Pokemon Name?", "Insert Pokemons Names.");
+                invalidResponse = false;
+            } catch (InvalidResponseException ex) {
+                invalidResponse = true;
+            }
+        }
+        invalidResponse = true;
+        while (invalidResponse) {
+            try {
+                p = editPokemonStringDescription(p, "Edit Pokemon Description?", "Insert Pokemons Description.");
+                invalidResponse = false;
+            } catch (InvalidResponseException ex) {
+                invalidResponse = true;
+            }
+        }
+        invalidResponse = true;
+        while (invalidResponse) {
+            try {
+                p = editPokemonStringType(p, "Edit Pokemon Type?", "Insert Pokemons Type.");
+                invalidResponse = false;
+            } catch (InvalidResponseException ex) {
+                invalidResponse = true;
+            }
+        }
+        invalidResponse = true;
+        while (invalidResponse) {
+            try {
+                p = editPokemonStringSecondaryType(p, "Edit Pokemon Type?", "Insert Pokemons Type.");
+                invalidResponse = false;
+            } catch (InvalidResponseException ex) {
+                invalidResponse = true;
+            }
+        }
+
+        io.displayMsg("New Edited Pokemon");
+        this.displayPokemon(p);
+
+        return p;
+    }
+
+    private Pokemon editPokemonIntID(Pokemon p, String askWhatToEdit, String yesResultMessage) throws InvalidResponseException {
+        String response = this.yesOrNoEditPrompt(askWhatToEdit);
+        if (response.equalsIgnoreCase("y")) {
+            String id = userResponse(yesResultMessage);
+            p.setPokemonId(Integer.parseInt(id));
+        } else if (response.equalsIgnoreCase("n")) {
+            io.displayMsg("No changes were made.");
+        } else {
+            throw new InvalidResponseException();
+        }
+        return p;
+    }
+
+    private Pokemon editPokemonStringName(Pokemon p, String askWhatToEdit, String yesResultMessage) throws InvalidResponseException {
+        String response = this.yesOrNoEditPrompt(askWhatToEdit);
+        if (response.equalsIgnoreCase("y")) {
+            String name = userResponse(yesResultMessage);
+            p.setName(name);
+        } else if (response.equalsIgnoreCase("n")) {
+            io.displayMsg("No changes were made.");
+        } else {
+            throw new InvalidResponseException();
+        }
+        return p;
+    }
+
+    private Pokemon editPokemonStringDescription(Pokemon p, String askWhatToEdit, String yesResultMessage) throws InvalidResponseException {
+        String response = this.yesOrNoEditPrompt(askWhatToEdit);
+        if (response.equalsIgnoreCase("y")) {
+            String name = userResponse(yesResultMessage);
+            p.setName(name);
+        } else if (response.equalsIgnoreCase("n")) {
+            io.displayMsg("No changes were made.");
+        } else {
+            throw new InvalidResponseException();
+        }
+        return p;
+    }
+
+    private Pokemon editPokemonStringType(Pokemon p, String askWhatToEdit, String yesResultMessage) throws InvalidResponseException {
+        String response = this.yesOrNoEditPrompt(askWhatToEdit);
+        if (response.equalsIgnoreCase("y")) {
+            String name = userResponse(yesResultMessage);
+            p.setType1(name);
+        } else if (response.equalsIgnoreCase("n")) {
+            io.displayMsg("No changes were made.");
+        } else {
+            throw new InvalidResponseException();
+        }
+        return p;
+    }
+
+    private Pokemon editPokemonStringSecondaryType(Pokemon p, String askWhatToEdit, String yesResultMessage) throws InvalidResponseException {
+        String response = this.yesOrNoEditPrompt(askWhatToEdit);
+        if (response.equalsIgnoreCase("y")) {
+            String name = userResponse(yesResultMessage);
+            p.setType2(name);
+        } else if (response.equalsIgnoreCase("n")) {
+            io.displayMsg("No changes were made.");
+        } else {
+            throw new InvalidResponseException();
+        }
+        return p;
+    }
+
+    private String yesOrNoEditPrompt(String describeEditMsg) {
+        io.displayMsg(describeEditMsg);
+        return io.readMsg("Yes or No? please respond with(Y/N).");
+    }
+
     public void displayAllPokemon(List<Pokemon> pokemon) {
         io.displayMsg("Pokemon List");
         for (Pokemon currentPokemon : pokemon) {
@@ -113,16 +242,21 @@ public class UserInterface {
     public void pokemonAddedMessage() {
         io.displayMsg("** Pokemon Added.  ** ");
     }
-    public String inputPokemonName(){
+
+    public String inputPokemonName() {
         return io.readMsg("Please insert Pokemon Name.");
     }
-    
-    public int inputPokemonID(){
+
+    public int inputPokemonID() {
         return io.readInt("Please Insert PokemonID.");
     }
-    
+
     public void pokemonRemovedMsg() {
         io.displayMsg("Pokemon Removed.");
+    }
+
+    public void pokemonUpdatedMsg() {
+        io.displayMsg("Pokemon Updated.");
     }
 
     public void pressEnterToContinue() {

@@ -9,10 +9,9 @@ package com.mycompany.pokemon.library.console.app.exceptions;
  *
  * @author kmlnd
  */
-public class PersistenceException extends Exception{
+public class InvalidResponseException extends Exception {
 
-    public PersistenceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public InvalidResponseException() {
     }
-    
+   
 }

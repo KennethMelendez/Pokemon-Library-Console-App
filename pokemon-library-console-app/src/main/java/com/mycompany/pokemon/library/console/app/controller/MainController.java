@@ -45,7 +45,7 @@ public class MainController {
                     removePokemon();
                     break;
                 case "3":
-                    System.out.println("Update Pokemon");
+                    updatePokemon();
                     break;
                 case "4":
                     viewAllPokemon();
@@ -93,5 +93,15 @@ public class MainController {
 
     private void pressEnter() {
         ui.pressEnterToContinue();
+    }
+
+    private void updatePokemon() {
+        int id = ui.inputPokemonID();
+        Pokemon currentPokemon = sl.getPokemonById(id);
+        ui.displayPokemon(currentPokemon);
+        this.pressEnter();
+        Pokemon currentEditedPokemon = ui.editPokemon(currentPokemon);
+        sl.updatePokemon(currentEditedPokemon);
+
     }
 }
